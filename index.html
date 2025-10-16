@@ -108,21 +108,5 @@
         <a href="/zala/" class="btn">Открыть IPTV-ресурсы</a>
       </div>
     </section>
-
-    <footer>
-      <p>Страница обновлена: <span id="last-updated">16.10.2025</span></p>
-    </footer>
-  </div>
-
-  <script>
-    // Автообновление даты
-    try {
-      const now = new Date();
-      const day = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const year = now.getFullYear();
-      document.getElementById('last-updated').textContent = `${day}.${month}.${year}`;
-    } catch (e) {}
-  </script>
 </body>
 </html>
