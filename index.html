@@ -76,10 +76,6 @@
       text-decoration: none;
       font-weight: 500;
       flex: 1;
-      cursor: pointer;
-    }
-    .file-link:hover {
-      color: var(--accent);
     }
     .file-icon {
       margin-right: 0.8rem;
@@ -97,7 +93,6 @@
       margin-left: 1rem;
       font-weight: 500;
       transition: background 0.2s;
-      cursor: pointer;
     }
     .btn:hover {
       background: #0d62d0;
@@ -148,7 +143,7 @@
       <h2>📺 Плейлист</h2>
       <ul class="file-list">
         <li class="file-item">
-          <span class="file-link" data-file="zala.m3u">
+          <span class="file-link">
             <span class="file-icon">📄</span>
             zala.m3u
           </span>
@@ -161,7 +156,7 @@
       <h2>🐍 Скрипт</h2>
       <ul class="file-list">
         <li class="file-item">
-          <span class="file-link" data-file="zala_qwen.py">
+          <span class="file-link">
             <span class="file-icon">⚙️</span>
             zala_qwen.py
           </span>
@@ -174,14 +169,14 @@
       <h2>📄 Текстовые файлы</h2>
       <ul class="file-list">
         <li class="file-item">
-          <span class="file-link" data-file="url_playlist.txt">
+          <span class="file-link">
             <span class="file-icon">📝</span>
             url_playlist.txt
           </span>
           <a href="/zala/url-playlist.txt" class="btn" download>Скачать</a>
         </li>
         <li class="file-item">
-          <span class="file-link" data-file="epg.txt">
+          <span class="file-link">
             <span class="file-icon">📝</span>
             epg.txt
           </span>
@@ -190,7 +185,29 @@
       </ul>
     </section>
 
-    <!-- ЛОГОТИПЫ -->
+    <!-- 📡 Программа передач (EPG) -->
+    <section class="section">
+      <h2>📡 Программа передач (EPG)</h2>
+      <ul class="file-list">
+        <li class="file-item">
+          <span class="file-link">
+            <span class="file-icon">📦</span>
+            epg.xml.gz
+          </span>
+          <a href="/zala/epg.xml.gz" class="btn" download>Скачать</a>
+        </li>
+      </ul>
+      <div class="warning" style="margin-top: 1rem;">
+        ⚠️ Это сжатый файл телепрограммы в формате XMLTV.  
+        Многие IPTV-плееры (TiviMate, IPTV Smarters и др.) поддерживают его напрямую.
+      </div>
+      <p style="margin-top: 1rem; font-size: 0.95rem; color: var(--text-secondary);">
+        Ссылка для плеера:  
+        <code>https://asinskievgeni.github.io/zala/epg.xml.gz</code>
+      </p>
+    </section>
+
+    <!-- 🖼️ Логотипы -->
     <section class="section">
       <h2>🖼️ Логотипы</h2>
       <div class="warning">
@@ -201,7 +218,7 @@
 
     <footer>
       <p>Для IPTV-плееров используйте прямую ссылку на <code>https://asinskievgeni.github.io/zala/zala.m3u</code></p>
-     <p>Обновлено: <span id="last-updated">17.10.2025</span></p>
+      <p>Обновлено: <span id="last-updated">18.10.2025</span></p>
     </footer>
   </div>
 
@@ -214,52 +231,6 @@
       const year = date.getFullYear();
       document.getElementById('last-updated').textContent = `${day}.${month}.${year}`;
     } catch (e) {}
-
-    // Обработка кликов: загружаем файлы из /zala/
-    document.querySelectorAll('.file-link[data-file]').forEach(link => {
-      link.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const fileName = link.getAttribute('data-file');
-        if (!fileName) return;
-        
-        const fileUrl = `/zala/${fileName}`;
-        try {
-          const response = await fetch(fileUrl);
-          if (!response.ok) throw new Error(`Файл не найден: ${response.status}`);
-          
-          const content = await response.text();
-          const newWindow = window.open('', '_blank');
-          newWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <title>${fileName}</title>
-              <style>
-                body { 
-                  font-family: monospace; 
-                  margin: 20px; 
-                  white-space: pre-wrap;
-                  background: #f8f9fa;
-                  color: #1a1a1a;
-                }
-                h1 { 
-                  margin-bottom: 20px; 
-                  color: #1a73e8;
-                }
-              </style>
-            </head>
-            <body>
-              <h1>${fileName}</h1>
-              <div>${content.replace(/</g, '<').replace(/>/g, '>')}</div>
-            </body>
-            </html>
-          `);
-          newWindow.document.close();
-        } catch (error) {
-          alert(`Ошибка при загрузке файла ${fileName}: ${error.message}`);
-        }
-      });
-    });
   </script>
 </body>
 </html>
